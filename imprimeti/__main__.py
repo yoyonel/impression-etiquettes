@@ -5,6 +5,7 @@ import logging
 import os
 import time
 
+from imprimeti.erreurs import InitialisationError
 from imprimeti.fenetreprincipale import FenetrePrincipale
 from imprimeti.fenetreparametres import FenetreParametres
 from imprimeti.etiquetteperso import EtiquetteClient
@@ -41,11 +42,11 @@ def lancer_impression_cb():
 
 if __name__ == "__main__":
     try:
-        
+        chargement_constantes_application()
         description_etiquette = EtiquetteClient(host=BDD_ADRESSE_SERVEUR, user=BDD_NOM_UTILISATEUR,
                                       passwd=BDD_MOT_DE_PASSE, database=BDD_NOM_BASE)
-    except Exception as identifier:
-        QtWidgets.QMessageBox.information(fenetre_principale,"Initialisation", "Problème Initialisation")        
+    except InitialisationError as erreur:
+        QtWidgets.QMessageBox.critical(fenetre_principale,"Initialisation", erreur.message)        
     fenetre_principale.initialisation_ihm(description_etiquette)
     fenetre_principale.ui.actionQuitter.triggered.connect(fermer_appli_cb)
     fenetre_principale.ui.actionConfig.triggered.connect(afficher_fenetre_parametres_appli_cb)

@@ -2,6 +2,8 @@ import json
 from PyQt5 import QtWidgets, QtCore, QtGui
 import mysql.connector as MC
 
+from imprimeti.erreurs import InitialisationError
+
 # Constantes globales pour l'accès à la bdd de production
 BDD_ADRESSE_SERVEUR = ''
 BDD_NOM_UTILISATEUR = ''
@@ -48,7 +50,7 @@ def chargement_constantes_application():
     """
     Chargement des constantes du projet depuis le fichier json et la bdd de production
     """
-    chargement_parametre_contenus_fichier_json("settings.json")
+    chargement_parametre_contenus_fichier_json("setting.json")
 
     chargement_liste_operateurs_en_bdd()
 
@@ -85,24 +87,30 @@ def chargement_parametre_contenus_fichier_json(fichier_json):
         DOSSIER_TEMPLATE = parametres['application']['dossier_modele']
         FICHIER_SORTIE = parametres['application']['fichier_sortie']
     except KeyError as erreur:
-        print(erreur)
+        raise InitialisationError("Clé non présente dans le fichier JSON!")
+    except FileNotFoundError as erreur :
+        raise InitialisationError("Fichier JSON {} introuvable!".format(fichier_json))
+    except Exception as erreur:
+        raise InitialisationError("Erreur non répertorié-> {}".format(erreur))
 
 def chargement_liste_operateurs_en_bdd():
     """ Chargement de la liste des opérateurs depuis la base de données
-    """    
-    #try:
-    mysql_connexion = MC.connect(host=BDD_ADRESSE_SERVEUR, user=BDD_NOM_UTILISATEUR,
-                                passwd=BDD_MOT_DE_PASSE, database=BDD_NOM_BASE)
-    mysql_curseur = mysql_connexion.cursor()
-    mysql_curseur.execute("SELECT * FROM operateurs")
-    for operateur in mysql_curseur:
-        LISTE_OPERATEURS.append("{} - {} {} {}".format(*operateur[1:5]))
-    mysql_curseur.close()        
-    mysql_connexion.close()
-    '''
+    """
+    try:
+        mysql_connexion = None
+        mysql_connexion = MC.connect(host=BDD_ADRESSE_SERVEUR, user=BDD_NOM_UTILISATEUR,
+                                    passwd=BDD_MOT_DE_PASSE, database=BDD_NOM_BASE)
+        mysql_curseur = mysql_connexion.cursor()
+        mysql_curseur.execute("SELECT * FROM operateurs")
+        for operateur in mysql_curseur:
+            LISTE_OPERATEURS.append("{} - {} {} {}".format(*operateur[1:5]))
+        mysql_curseur.close()        
+        mysql_connexion.close()
+    
     except MC.Error as erreur:
         print(erreur)
     finally:
-        if mysql_connexion.is_connected():
-            mysql_connexion.close()
-    '''    
+        if mysql_connexion :
+            if mysql_connexion.is_connected():
+                mysql_connexion.close()
+       
