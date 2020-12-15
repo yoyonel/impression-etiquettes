@@ -1,4 +1,4 @@
-# LABEL PRINTER MANAGER
+# IMPRESSION-ETIQUETTES
 
 
 The source code is [available at GitHub](https://github.com/RomualdDugied/labelprintermanager).
@@ -23,7 +23,7 @@ Les étiquettes sont imprimés par une imprimante Brady IP300
 ```
 > Dossier contenant les sources python du projet
 ```
-/labelprintermanager
+/imprimeti
 	/bradyip300
 		__init__.py
 		bradyip300.py
@@ -38,12 +38,14 @@ Les étiquettes sont imprimés par une imprimante Brady IP300
 	__init__.py
 	__main__.py
 		Module principale du projet
-	constants.py
+	constantes.py
 		Module contenant les constantes du projet
-	customerlabel.py
+	etiquetteperso.py
 		Module contenant l’objet CustomerLabel permettant la définition des étiquettes
-	mywindow.py
+	fenetreprincipale.py
 		Module contenant la fenêtre principale
+	fenetreprincipale.py
+		Module contenant la fenêtre de parametrage de l'application
 ```
 > Dossier contenant les logs de l’application
 ```

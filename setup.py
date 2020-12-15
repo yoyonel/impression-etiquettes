@@ -12,7 +12,7 @@ setup(
     name='labelprintermanager',
     version='1.0',
     author='Romuald Dugied',
-    author_email = 'rdugied@horizon-telecom.fr',
+    author_email = 'romuald.dugied@gmail.com',
     url='https://github.com/RomualdDugied/labelprintermanager',
     description='Logiciel impression etiquette',
     long_description=long_description,
