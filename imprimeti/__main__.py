@@ -1,0 +1,57 @@
+#!./venv/bin/python
+# -*- coding: utf-8 -*-
+import sys
+import logging
+import os
+import time
+
+from imprimeti.fenetreprincipale import FenetrePrincipale
+from imprimeti.fenetreparametres import FenetreParametres
+from imprimeti.etiquetteperso import EtiquetteClient
+from imprimeti.bradyip300.bradyip300 import BradyIp300
+from imprimeti.constantes import *
+from PyQt5 import QtWidgets, QtCore  # module pour wrapper la GUI conçue en Qt5
+
+logger = logging.getLogger(__name__)
+application = QtWidgets.QApplication(sys.argv)
+fenetre_principale = FenetrePrincipale()
+fenetre_parametres =  FenetreParametres()
+
+def afficher_fenetre_parametres_appli_cb():
+    """ Affiche la fenètre des paramètres de l'application
+    """    
+    fenetre_parametres.show()
+
+def fermer_appli_cb():
+    """ Ferme l'application
+    """    
+    application.closeAllWindows()
+
+def lancer_impression_cb():
+    """ Lance l'impression du fichier généré
+    """    
+    imprimante = BradyIp300(chemin_imprimante=BRADY_CHEMIN_PERIPHERIQUE,
+                            pas_etiquette=BRADY_PAS_ETIQUETTE_MM,
+                            decalage_x=BRADY_DECALAGE_X_MM,
+                            decalage_y=BRADY_DECALAGE_Y_MM)
+    description_etiquette.creationFichierImpression(FICHIER_SORTIE)
+    imprimante.lancementImpression(FICHIER_SORTIE)
+    fenetre_principale.initialisation_ihm()
+    fenetre_principale.ui.actionUnitaire.setEnabled(True)
+
+if __name__ == "__main__":
+    try:
+        
+        description_etiquette = EtiquetteClient(host=BDD_ADRESSE_SERVEUR, user=BDD_NOM_UTILISATEUR,
+                                      passwd=BDD_MOT_DE_PASSE, database=BDD_NOM_BASE)
+    except Exception as identifier:
+        QtWidgets.QMessageBox.information(fenetre_principale,"Initialisation", "Problème Initialisation")        
+    fenetre_principale.initialisation_ihm(description_etiquette)
+    fenetre_principale.ui.actionQuitter.triggered.connect(fermer_appli_cb)
+    fenetre_principale.ui.actionConfig.triggered.connect(afficher_fenetre_parametres_appli_cb)
+    fenetre_principale.signalSaisieTerminee.connect(lancer_impression_cb)
+    fenetre_principale.show()
+    logger.info("Demarrage application")
+    sys.exit(application.exec_())
+
+    
