@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
-import re
-import sys
-import os
 import logging
+import os
+import re
 
-import mysql.connector as MC
-
-from . import constantes as const
-from . import connexion
+import imprimeti.connexion as connexion
+import imprimeti.constantes as const
 
 logger = logging.getLogger(__name__)
 
-class EtiquetteClient():
+
+class EtiquetteClient:
     """  
         Objet EtiquetteClient
     """
+
     def __init__(self):
         """  """
         # Attributs liés au contenu de l'étiquette
@@ -27,13 +26,13 @@ class EtiquetteClient():
         self.__quantite = None
         self.__numero_serie = None
         self.__version_logicielle = None
-        self.__chemin_fichier_modele = None        
+        self.__chemin_fichier_modele = None
         self.__date_garantie = None
-        
+
         self.produit_serialise = False
         self.produit_versionne = False
         self.produit_valide = False
-                
+
     def __str__(self):
         return ("type_etiquette = {}\n\
             code_operateur = {}\n\
@@ -44,7 +43,8 @@ class EtiquetteClient():
             quantite = {}\n\
             numero_serie = {}\n\
             version_logicielle = {}\n\
-            ".format(self.type_etiquette, self.code_operateur, self.initiales_operateur, self.numero_of, self.reference_produit, self.date_garantie, self.quantite, self.numero_serie, self.version_logicielle))
+            ".format(self.type_etiquette, self.code_operateur, self.initiales_operateur, self.numero_of, self.reference_produit, self.date_garantie,
+                     self.quantite, self.numero_serie, self.version_logicielle))
 
     @property
     def type_etiquette(self):
@@ -72,7 +72,7 @@ class EtiquetteClient():
         if type(valeur) is not str:
             raise TypeError("code_operateur doit être de type <str>!")
         if not valeur.isdigit():
-            raise "code_operateur doit être un nombre!"
+            raise ValueError("code_operateur doit être un nombre!")
         valeur = int(valeur)
         if not (1 <= valeur <= 99):
             raise ValueError("code_operateur doit être compris entre 1 et 99!")
@@ -128,11 +128,11 @@ class EtiquetteClient():
         if nombre_enregistrements == 0:
             raise ValueError("Référence produit {} non présent dans la base!".format(valeur))
         elif nombre_enregistrements == 1:
-            if (self.type_etiquette == const.TypeEtiquette.TYPE_OF ):
+            if (self.type_etiquette == const.TypeEtiquette.TYPE_OF):
                 self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_OF])
-            elif (self.type_etiquette == const.TypeEtiquette.TYPE_ADDITIONNEL ):
+            elif (self.type_etiquette == const.TypeEtiquette.TYPE_ADDITIONNEL):
                 self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_ADDITIONNEL])
-            elif (self.type_etiquette == const.TypeEtiquette.TYPE_OPERATEUR_MONTAGE ):
+            elif (self.type_etiquette == const.TypeEtiquette.TYPE_OPERATEUR_MONTAGE):
                 self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_MONTAGE])
             if (self.chemin_fichier_modele == const.DOSSIER_TEMPLATE):
                 raise Exception("Fichier modèle étiquette non renseigné dans la base")
@@ -142,7 +142,7 @@ class EtiquetteClient():
             self.produit_valide = bool(enregistrements[0][const.ChampBdd.PRODUIT_VALIDE])
             if (not self.produit_valide):
                 raise Exception("Etiquette non validée techniquement ou changement de version en cours. Veuillez appeler un technicien!")
-        else :
+        else:
             raise ValueError("Doublons dans la base pour ce code produit!")
         self.__reference_produit = valeur
         logger.debug("reference_produit = {}".format(valeur))
@@ -157,7 +157,7 @@ class EtiquetteClient():
     def reference_client(self, valeur):
         if type(valeur) is not str:
             raise TypeError("reference_produit doit être de type <str>!")
-        self.__reference_client=valeur
+        self.__reference_client = valeur
 
     @property
     def quantite(self):
@@ -244,7 +244,7 @@ class EtiquetteClient():
 
         if ("#shortReferenceHorizon#" in specifications_etiquette):
             # ajout d'espace(s) si necessaire
-            specifications_etiquette = specifications_etiquette.replace("#shortReferenceHorizon#", (self.reference_produit[5:]+"  ")[:6])
+            specifications_etiquette = specifications_etiquette.replace("#shortReferenceHorizon#", (self.reference_produit[5:] + "  ")[:6])
 
         if ("#codeOperateur#" in specifications_etiquette):
             specifications_etiquette = specifications_etiquette.replace("#codeOperateur#", str(self.code_operateur))

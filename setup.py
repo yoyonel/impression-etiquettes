@@ -19,11 +19,11 @@ setup(
     long_description_content_type='text/mardown',
     license='GNU GPLv3',
     # https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'imprimeti=imprimeti.__main__:main'
+            'imprimeti=imprimeti.app:main'
         ],
     }
 )

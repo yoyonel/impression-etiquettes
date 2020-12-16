@@ -3,11 +3,8 @@
 
 import json
 
-
-
 from imprimeti.erreurs import InitialisationError
 from imprimeti import connexion
-
 
 FICHIER_PARAMETRES_APPLI = "settings.json"
 
@@ -82,9 +79,7 @@ def chargement_constantes_application():
         FICHIER_SORTIE = parametres['application']['fichier_sortie']
     except KeyError as erreur:
         raise InitialisationError("Clé non présente dans le fichier JSON!")
-    except FileNotFoundError as erreur :
+    except FileNotFoundError as erreur:
         raise InitialisationError("Fichier JSON {} introuvable!".format(fichier_json))
     except Exception as erreur:
         raise InitialisationError("Erreur non répertorié-> {}".format(erreur))
-
-    

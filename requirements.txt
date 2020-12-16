@@ -1,2 +1,6 @@
 PyQt5>=5.14
+PyQt5-stubs==5.14.2.2
 mysql-connector-python
+
+pytest==6.2.1
+pytest-qt==3.3.0
