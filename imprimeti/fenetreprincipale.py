@@ -3,10 +3,10 @@ import logging
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 
-from imprimeti.qt.mainwindow_ui import Ui_MainWindow
-from imprimeti.etiquetteperso import EtiquetteClient
-from imprimeti import connexion
-import imprimeti.constantes as const
+from .qt.mainwindow_ui import Ui_MainWindow
+from .etiquetteperso import EtiquetteClient
+from . import connexion
+from . import constantes as const
 
 
 logger = logging.getLogger(__name__)

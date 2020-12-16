@@ -3,15 +3,14 @@ import unittest
 
 sys.path.append("..")
 
-import CustomerLabel
-from constants import *
+from imprimeti.etiquetteperso import EtiquetteClient
 
 
-class CustomerLabelTest(unittest.TestCase):
+
+class EtiquetteClientTest(unittest.TestCase):
 
     def setUp(self):
-        self.etiquette = CustomerLabel(host=BDD_ADRESSE_SERVEUR, user=BDD_NOM_UTILISATEUR,
-                                      passwd=BDD_MOT_DE_PASSE, database=BDD_NOM_BASE)
+        self.etiquette = EtiquetteClient()
 
     def test_mafonction(self):
         self.assertEqual(self.etiquette, 5)

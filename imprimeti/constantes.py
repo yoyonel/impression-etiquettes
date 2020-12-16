@@ -1,13 +1,10 @@
 #!./venv/bin/python
 # -*- coding: utf-8 -*-
 
-####### import modules lib std
 import json
 
-####### import modules externes
 
 
-####### import modules du projet
 from imprimeti.erreurs import InitialisationError
 from imprimeti import connexion
 

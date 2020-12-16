@@ -1,14 +1,9 @@
 #!./venv/bin/python
 # -*- coding: utf-8 -*-
 
-####### import modules lib std
 
-
-####### import modules externes
 import mysql.connector as MC
 
-
-####### import modules du projet
 import imprimeti.constantes as const
 
 

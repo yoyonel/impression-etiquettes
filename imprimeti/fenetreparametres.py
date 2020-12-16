@@ -4,9 +4,9 @@ from logging import raiseExceptions
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 
-from imprimeti.etiquetteperso import EtiquetteClient
-from imprimeti.qt.setupwindow_ui import Ui_SetUpWindow
-import imprimeti.constantes as const
+from .etiquetteperso import EtiquetteClient
+from .qt.setupwindow_ui import Ui_SetUpWindow
+from . import constantes as const
 
 logger = logging.getLogger(__name__)
 

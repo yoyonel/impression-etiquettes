@@ -10,7 +10,7 @@ Logiciel de gestion des étiquettes pour la production.
 Les étiquettes sont imprimés par une imprimante Brady IP300
 
 
-L'imprimante utilise un fichier de description pour le formatage et les données présentes.
+L'imprimante utilise un fichier de description pour le formatage et les données à imprimer.
 
 
 ## Environnement
@@ -42,7 +42,11 @@ L'imprimante utilise un fichier de description pour le formatage et les données
     - Type d'étiquette
     - Nom de l'opérateur (Je prévois à terme de scanner un badge)
     - Date à indiquer sur l'étiquette
-    - Code
+    - Numero OF (le lot)
+    - Référence Produit
+    - Quantité
+    - Premier numéro de série du lot
+    - Version du firmware
 
 
 

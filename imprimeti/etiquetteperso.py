@@ -6,8 +6,8 @@ import logging
 
 import mysql.connector as MC
 
-import imprimeti.constantes as const
-from imprimeti import connexion
+from . import constantes as const
+from . import connexion
 
 logger = logging.getLogger(__name__)
 
