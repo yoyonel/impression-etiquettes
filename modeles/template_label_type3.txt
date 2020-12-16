@@ -1,0 +1,25 @@
+; Fichier type pour étiquette Datamatrix
+
+m m
+; debut tache
+J
+; conf imprimante (vitesse...)
+H 50
+; format etiquette
+S l1;#offsetX#,#offsetY#,12,14.64,18,#stepLabel#,5
+; option impression
+O T,p
+; Déclaration du champ numéro de serie
+T:SERIAL;1,1,0,5,pt5;[SER:#numeroSerie#][I]
+
+; impression code barre
+B 6,1.5,0,DATAMATRIX,0.25;#referenceHorizon#;[+:1,SERIAL][C:0][D:6,0];#numeroOf#;#codeOperateur;#date#
+B 6,1.5,0,DATAMATRIX,0.25;#referenceHorizon#;000000;;#numeroOf#;#codeOperateur;#date#
+
+; impression textes
+T 0.7,9,0,5,pt5;#referenceHorizon#
+T 11.8,9,0,5,pt5;#numeroOf#
+T 1,11,0,5,pt6;#numeroVersion#
+T 10,11,0,5,pt6;[+:1,SERIAL][C:0][D:6,0]
+; nb d''étiquettes
+A #nombreEtiquettes#

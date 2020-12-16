@@ -1,8 +1,6 @@
 # IMPRESSION-ETIQUETTES
 
 
-The source code is [available at GitHub](https://github.com/RomualdDugied/labelprintermanager).
-
 ## Presentation du projet
 
 Logiciel de gestion des étiquettes pour la production.
@@ -54,7 +52,11 @@ Les étiquettes sont imprimés par une imprimante Brady IP300
 > Dossier contenant les ressources de l'application (ui, icones, images)
 ```
 /res
-```       	
+``` 
+> Dossier contenant les screenshot des GUI de l'application
+'''
+/screenshots
+'''
 > Dossier contenant les fichiers gabarit des étiquettes
 
 ```

@@ -9,11 +9,11 @@ with open("LICENSE", "r") as license_file:
     license = license_file.read()
 
 setup(
-    name='labelprintermanager',
+    name='imprimeti',
     version='1.0',
     author='Romuald Dugied',
-    author_email='romuald.dugied@gmail.com',
-    url='https://github.com/RomualdDugied/labelprintermanager',
+    author_email = 'romuald.dugied@gmail.com',
+    url='https://github.com/RomualdDugied/impression-etiquettes',
     description='Logiciel impression etiquette',
     long_description=long_description,
     long_description_content_type='text/mardown',

@@ -1,0 +1,21 @@
+{
+    "basededonnees":
+    {
+        "nom_hote": "localhost",
+        "nom_utilisateur": "poste_atelier",
+        "mot_de_passe": "******",
+        "nom_basededonnees": "db_test"
+    },
+    "bradyIP300":
+    {
+        "port_usb": "/dev/usb/lp1",
+        "pas_etiquette": 2105,
+        "decalage_x": 10,
+        "decalage_y": 5
+    },
+    "application":
+    {
+        "dossier_modele": "/home/romu/Developpement/Python/impression-etiquettes/modeles/",
+        "fichier_sortie": "printout.txt"
+    }
+}
