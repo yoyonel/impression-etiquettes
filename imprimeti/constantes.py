@@ -1,5 +1,7 @@
+#!./venv/bin/python
+# -*- coding: utf-8 -*-
 import json
-from PyQt5 import QtWidgets, QtCore, QtGui
+
 import mysql.connector as MC
 
 from imprimeti.erreurs import InitialisationError

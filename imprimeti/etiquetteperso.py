@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import mysql.connector as MC
 import re
 import sys
 import os
 import logging
+
+import mysql.connector as MC
 
 from imprimeti.constantes import *
 

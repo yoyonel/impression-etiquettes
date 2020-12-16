@@ -5,18 +5,16 @@ import logging
 import os
 import time
 
+from PyQt5 import QtWidgets, QtCore  # module pour wrapper la GUI conçue en Qt5
+
 from imprimeti.erreurs import InitialisationError
 from imprimeti.fenetreprincipale import FenetrePrincipale
 from imprimeti.fenetreparametres import FenetreParametres
 from imprimeti.etiquetteperso import EtiquetteClient
 from imprimeti.bradyip300.bradyip300 import BradyIp300
 from imprimeti.constantes import *
-from PyQt5 import QtWidgets, QtCore  # module pour wrapper la GUI conçue en Qt5
 
 logger = logging.getLogger(__name__)
-application = QtWidgets.QApplication(sys.argv)
-fenetre_principale = FenetrePrincipale()
-fenetre_parametres =  FenetreParametres()
 
 def afficher_fenetre_parametres_appli_cb():
     """ Affiche la fenètre des paramètres de l'application
@@ -41,6 +39,9 @@ def lancer_impression_cb():
     fenetre_principale.ui.actionUnitaire.setEnabled(True)
 
 if __name__ == "__main__":
+    application = QtWidgets.QApplication(sys.argv)
+    fenetre_principale = FenetrePrincipale()
+    fenetre_parametres =  FenetreParametres()
     try:
         chargement_constantes_application()
         description_etiquette = EtiquetteClient(host=BDD_ADRESSE_SERVEUR, user=BDD_NOM_UTILISATEUR,

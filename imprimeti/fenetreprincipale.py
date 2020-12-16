@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from PyQt5 import QtWidgets, QtCore, QtGui
+
 from imprimeti.qt.mainwindow_ui import Ui_MainWindow
 from imprimeti.etiquetteperso import EtiquetteClient
 from imprimeti.constantes import *
-from PyQt5 import QtWidgets, QtCore, QtGui
+
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +26,7 @@ class FenetrePrincipale(QtWidgets.QMainWindow):
         self.ui.comboBoxTypeEtiquette.addItem("Etiquette Additionnelle")
         self.ui.comboBoxTypeEtiquette.addItem("Etiquette Opérateur Montage")
 
+        # Connexion de tous les signaux aux callback
         self.ui.actionUndo.triggered.connect(self.annuler_cb)
         self.ui.actionInfo.triggered.connect(self.afficher_fenetre_infos_cb)
         self.ui.comboBoxTypeEtiquette.currentIndexChanged.connect(self.selection_type_etiquette_cb)  
@@ -36,6 +39,11 @@ class FenetrePrincipale(QtWidgets.QMainWindow):
         self.ui.actionUnitaire.triggered.connect(self.imprimer_une_etiquette_cb)
 
     def initialisation_ihm(self, etiquette):
+        """Initialisation de l'IHM
+
+        Args:
+            etiquette ([EtiquetteClient]): Objet permettant de définir l'étiquette a imprimer
+        """        
         self._position_sequence_ihm = 0
 
         self.description_etiquette = etiquette
@@ -49,7 +57,6 @@ class FenetrePrincipale(QtWidgets.QMainWindow):
 
         self.ui.comboBoxOperateur.currentIndexChanged[str].connect(self.selection_operateur)  
 
-        """ Initialisation de l'IHM """
         self._ihm_attente_type_etiquette()
         
 
@@ -301,7 +308,7 @@ class FenetrePrincipale(QtWidgets.QMainWindow):
         self.recule_ihm()
         
     def afficher_fenetre_infos_cb(self):
-        """  """
+        """ Permet d'afficher une fenetre d'information pour l'opérateur """
         QtWidgets.QMessageBox.information(self, "A propos", "Logiciel Impression Etiquettes Produits\rR.DUGIED\r10/07/2020")
 
     def selection_type_etiquette_cb(self, index):

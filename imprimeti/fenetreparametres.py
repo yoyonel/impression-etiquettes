@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import logging
 from logging import raiseExceptions
+
+from PyQt5 import QtWidgets, QtCore, QtGui
+
 from imprimeti.etiquetteperso import EtiquetteClient
 from imprimeti.qt.setupwindow_ui import Ui_SetUpWindow
 from imprimeti.constantes import *
-from PyQt5 import QtWidgets, QtCore, QtGui
 
 logger = logging.getLogger(__name__)
 
