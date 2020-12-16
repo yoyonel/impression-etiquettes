@@ -1,0 +1,25 @@
+; Fichier type pour étiquette PDF417
+
+m m
+; debut tache
+J
+; conf imprimante (vitesse...)
+H 50
+; format etiquette
+S l1;#offsetX#,#offsetY#,12,14.64,18,#stepLabel#,5
+; option impression
+O T,p
+; Déclaration du champ numéro de serie
+T:SERIAL;1,1,0,5,pt5;[SER:#numeroSerie#][I]
+
+; impression code barre
+B 0.2,1,0,PDF417,.05,.15,0.5;#shortReferenceHorizon#;[+:1,SERIAL][C:0][D:6,0];#numeroOf#;#codeOperateur#;#date#
+B 0.2,1,0,PDF417,.05,.15,0.5;#shortReferenceHorizon#;000000;#numeroOf#;#codeOperateur#;#date#
+
+; impression textes
+T 0.4,8.3,0,5,pt5;#referenceHorizon#
+T 12,8.3,0,5,pt5;#numeroOf#
+T 0.6,10.3,0,5,pt6;#numeroVersion#
+T 9.8,10.3,0,5,pt6;[+:1,SERIAL][C:0][D:6,0]
+; nb d''étiquettes
+A #nombreEtiquettes#

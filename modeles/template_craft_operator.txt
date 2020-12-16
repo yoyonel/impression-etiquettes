@@ -1,0 +1,21 @@
+m m
+; debut tache
+J
+; conf imprimante (vitesse...)
+H 50
+; format etiquette
+S l1;0.8,0.5,12,14.64,18,21.04,5
+; option impression
+O T,p
+
+
+; impression textes
+
+T 3,8,0,5,pt9;#initialesOperateur#(#codeOperateur#)
+
+
+
+; nb etiquettes
+A #nombreEtiquettes#
+
+
