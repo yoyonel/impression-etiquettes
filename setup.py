@@ -12,7 +12,7 @@ setup(
     name='imprimeti',
     version='1.0',
     author='Romuald Dugied',
-    author_email = 'romuald.dugied@gmail.com',
+    author_email='romuald.dugied@gmail.com',
     url='https://github.com/RomualdDugied/impression-etiquettes',
     description='Logiciel impression etiquette',
     long_description=long_description,
