@@ -1,11 +1,10 @@
 # IMPRESSION-ETIQUETTES
 
-
-The source code is [available at GitHub](https://github.com/RomualdDugied/labelprintermanager).
-
 ## Presentation du projet
 
 Logiciel de gestion des étiquettes pour la production.
+
+Projet développé en Python avec GUI s'appuyant sur PyQt5.
 
 Les étiquettes sont imprimés par une imprimante Brady IP300
 

@@ -1,4 +1,4 @@
-; Fichier type pour étiquette PDF417 Amphitech
+; Fichier type pour étiquette PDF417
 
 m m
 ; debut tache
