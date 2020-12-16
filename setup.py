@@ -18,6 +18,8 @@ setup(
     long_description=long_description,
     long_description_content_type='text/mardown',
     license='GNU GPLv3',
+    # https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
+    python_requires='>=3.6',
     packages=find_packages(),
     entry_points={
         'console_scripts': [

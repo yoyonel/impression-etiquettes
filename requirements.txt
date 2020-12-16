@@ -1,2 +1,2 @@
-PyQt5==5.14
+PyQt5>=5.14
 mysql-connector-python
