@@ -11,6 +11,9 @@ import json
 from imprimeti.erreurs import InitialisationError
 from imprimeti import connexion
 
+
+FICHIER_PARAMETRES_APPLI = "settings.json"
+
 # Constantes globales pour l'accès à la bdd de production
 BDD_ADRESSE_SERVEUR = ''
 BDD_NOM_UTILISATEUR = ''
@@ -25,7 +28,6 @@ BRADY_DECALAGE_Y_MM = 0
 
 DOSSIER_TEMPLATE = ""
 FICHIER_SORTIE = ""
-
 
 
 class TypeEtiquette():
@@ -54,22 +56,12 @@ class ChampBdd():
 
 
 def chargement_constantes_application():
+    """ Chargement des constantes du projet depuis le fichier json
     """
-    Chargement des constantes du projet depuis le fichier json et la bdd de production
-    """
-    chargement_parametre_contenus_fichier_json("settings.json")
-
-def chargement_parametre_contenus_fichier_json(fichier_json):  
-    """ Chargement du fichier json qui renferme les settings de l'application
-
-    Args:
-        fichier_json ([str]): chemin + nom du fichier json des parametres
-    """      
     global BDD_ADRESSE_SERVEUR
     global BDD_NOM_UTILISATEUR
     global BDD_MOT_DE_PASSE
     global BDD_NOM_BASE
-    global LISTE_OPERATEURS
     global BRADY_CHEMIN_PERIPHERIQUE
     global BRADY_PAS_ETIQUETTE_MM
     global BRADY_DECALAGE_X_MM
@@ -78,7 +70,7 @@ def chargement_parametre_contenus_fichier_json(fichier_json):
     global FICHIER_SORTIE
 
     try:
-        with open(fichier_json, "r") as fichier_parametres:
+        with open(FICHIER_PARAMETRES_APPLI, "r") as fichier_parametres:
             parametres = json.load(fichier_parametres)
 
         BDD_ADRESSE_SERVEUR = parametres['basededonnees']['nom_hote']

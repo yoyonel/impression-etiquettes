@@ -15,7 +15,7 @@ class EtiquetteClient():
     """  
         Objet EtiquetteClient
     """
-    def __init__(self, **kwargs):
+    def __init__(self):
         """  """
         # Attributs liés au contenu de l'étiquette
         self.__type_etiquette = None
@@ -122,40 +122,28 @@ class EtiquetteClient():
             raise TypeError("reference_produit doit être de type <str>!")
         if not valeur.isalnum():
             raise ValueError("reference_produit doit être un alpha numérique")
-        try:
-            mysql_connexion = None
-            mysql_connexion = MC.connect(**self.__parametres_bdd)
-            mysql_curseur = mysql_connexion.cursor()
-            # Recherche du code produit dans la table etilot
-            mysql_curseur.execute("""SELECT * FROM etilot WHERE CodeProduit="{}" """.format(valeur))
-            enregistrements = mysql_curseur.fetchall()
-            nombre_enregistrements = (len(enregistrements))
-            if nombre_enregistrements == 0:
-                raise ValueError("Référence produit {} non présent dans la base!".format(valeur))
-            elif nombre_enregistrements == 1:
-                if (self.type_etiquette == const.TypeEtiquette.TYPE_OF ):
-                    self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_OF])
-                elif (self.type_etiquette == const.TypeEtiquette.TYPE_ADDITIONNEL ):
-                    self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_ADDITIONNEL])
-                elif (self.type_etiquette == const.TypeEtiquette.TYPE_OPERATEUR_MONTAGE ):
-                    self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_MONTAGE])
-                if (self.chemin_fichier_modele == const.DOSSIER_TEMPLATE):
-                    raise Exception("Fichier modèle étiquette non renseigné dans la base")
-                self.reference_client = str(enregistrements[0][const.ChampBdd.REFERENCE_CLIENT])
-                self.produit_serialise = bool(enregistrements[0][const.ChampBdd.PRODUIT_SERIALISE])
-                self.produit_versionne = bool(enregistrements[0][const.ChampBdd.PRODUIT_VERSIONNE])
-                self.produit_valide = bool(enregistrements[0][const.ChampBdd.PRODUIT_VALIDE])
-                if (not self.produit_valide):
-                    raise Exception("Etiquette non validée techniquement ou changement de version en cours. Veuillez appeler un technicien!")
-            else :
-                raise ValueError("Doublons dans la base pour ce code produit!")
-        except MC.Error as err:
-            print(err)
-        finally:
-            if mysql_connexion :
-                if mysql_connexion.is_connected():
-                    mysql_connexion.close()
 
+        enregistrements = connexion.envoi_requete_bdd("""SELECT * FROM etilot WHERE CodeProduit="{}" """.format(valeur))
+        nombre_enregistrements = (len(enregistrements))
+        if nombre_enregistrements == 0:
+            raise ValueError("Référence produit {} non présent dans la base!".format(valeur))
+        elif nombre_enregistrements == 1:
+            if (self.type_etiquette == const.TypeEtiquette.TYPE_OF ):
+                self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_OF])
+            elif (self.type_etiquette == const.TypeEtiquette.TYPE_ADDITIONNEL ):
+                self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_ADDITIONNEL])
+            elif (self.type_etiquette == const.TypeEtiquette.TYPE_OPERATEUR_MONTAGE ):
+                self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_MONTAGE])
+            if (self.chemin_fichier_modele == const.DOSSIER_TEMPLATE):
+                raise Exception("Fichier modèle étiquette non renseigné dans la base")
+            self.reference_client = str(enregistrements[0][const.ChampBdd.REFERENCE_CLIENT])
+            self.produit_serialise = bool(enregistrements[0][const.ChampBdd.PRODUIT_SERIALISE])
+            self.produit_versionne = bool(enregistrements[0][const.ChampBdd.PRODUIT_VERSIONNE])
+            self.produit_valide = bool(enregistrements[0][const.ChampBdd.PRODUIT_VALIDE])
+            if (not self.produit_valide):
+                raise Exception("Etiquette non validée techniquement ou changement de version en cours. Veuillez appeler un technicien!")
+        else :
+            raise ValueError("Doublons dans la base pour ce code produit!")
         self.__reference_produit = valeur
         logger.debug("reference_produit = {}".format(valeur))
 
@@ -241,7 +229,7 @@ class EtiquetteClient():
             raise ValueError("date_garantie doit être au format dd/mm/yyyy!")
         self.__date_garantie = valeur
 
-    def creationFichierImpression(self, fichier_sortie):
+    def creer_fichier_impression(self, fichier_sortie):
         """
             Fonction générant le fichier d'impression de l'étiquette
         """

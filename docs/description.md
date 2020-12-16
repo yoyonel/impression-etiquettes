@@ -48,9 +48,7 @@ L'imprimante utilise un fichier de description pour le formatage et les données
 
 ## Initialisation
 
-- chargement fichier JSON
-- verification connexion à la base
-- chargement dans l'application de la liste des opérateurs
+- chargement paramètres appli issue d'un fichier JSON
 
 # Fonctionnement
 

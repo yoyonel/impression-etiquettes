@@ -14,7 +14,7 @@ class BradyIp300():
         self.decalage_x_mm = kwargs.get('decalage_x', None)
         self.decalage_y_mm = kwargs.get('decalage_y', None)
 
-    def modifierOffsetImpressionFichier(self, nom_fichier_a_traiter):
+    def modifier_offset_fichier_impression(self, nom_fichier_a_traiter):
         """Modifie les champs d'offset dans un fichier
         
         Raises:
@@ -23,7 +23,7 @@ class BradyIp300():
         Args:
             nom_fichier_a_traiter ([str]): chemin+nom du fichier à traiter
         """     
-        def remplaceBaliseParValeur(balise, valeur):
+        def remplacer_balise_par_valeur(balise, valeur):
             if balise in donnees_fichier_a_traiter :
                 chaine_modifiee = donnees_fichier_a_traiter.replace(balise, str(valeur))
             else:
@@ -33,18 +33,18 @@ class BradyIp300():
         with open(nom_fichier_a_traiter, "r") as fichier_a_traiter:
             donnees_fichier_a_traiter = fichier_a_traiter.read()
 
-        donnees_fichier_a_traiter = remplaceBaliseParValeur("#offsetX#", self.decalage_x_mm)
-        donnees_fichier_a_traiter = remplaceBaliseParValeur("#offsetY#", self.decalage_x_mm)
-        donnees_fichier_a_traiter = remplaceBaliseParValeur("#stepLabel#", self.pas_etiquette_mm)
+        donnees_fichier_a_traiter = remplacer_balise_par_valeur("#offsetX#", self.decalage_x_mm)
+        donnees_fichier_a_traiter = remplacer_balise_par_valeur("#offsetY#", self.decalage_x_mm)
+        donnees_fichier_a_traiter = remplacer_balise_par_valeur("#stepLabel#", self.pas_etiquette_mm)
 
         with open(nom_fichier_a_traiter, "w") as fichier_a_traiter:
-            fichier_a_traiter.write(donnees_etiquette)
+            fichier_a_traiter.write(donnees_fichier_a_traiter)
 
-    def lancementImpression(self, fichier_modele):
+    def lancer_impression_fichier(self, fichier_modele):
         """
         Lancement de l'impression via une commande terminal
         """
-        self.modifierOffsetImpressionFichier(fichier_modele)
+        self.modifier_offset_fichier_impression(fichier_modele)
         # TODO : à remplacer par l'impression lorsque le debug sera terminé
         os.system("cat {}".format(fichier_modele))
 
