@@ -4,7 +4,7 @@
 
 import mysql.connector as MC
 
-import imprimeti.constantes as const
+from . import constantes as const
 
 
 def essai_connexion_bdd():

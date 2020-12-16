@@ -9,9 +9,7 @@ Logiciel de gestion des étiquettes pour la production.
 
 Les étiquettes sont imprimés par une imprimante Brady IP300
 
-
 L'imprimante utilise un fichier de description pour le formatage et les données à imprimer.
-
 
 ## Environnement
 
@@ -38,7 +36,13 @@ L'imprimante utilise un fichier de description pour le formatage et les données
 
 - Un lecteur CAB (en émulation clavier) pour la saisie des champs (une saisie manuel est autorisé)
 
-- Champ à renseigner :
+## Descriptif des fenêtres Qt
+### Fenetre Principale:
+
+![GUI fenetre principale](https://raw.githubusercontent.com/RomualdDugied/impression-etiquettes/master/screenshots/ihm_rempli.png)
+
+
+- Champs à renseigner :
     - Type d'étiquette
     - Nom de l'opérateur (Je prévois à terme de scanner un badge)
     - Date à indiquer sur l'étiquette
@@ -48,15 +52,47 @@ L'imprimante utilise un fichier de description pour le formatage et les données
     - Premier numéro de série du lot
     - Version du firmware
 
+- Un bouton pour lancer la saisie des codes à barres
+
+- Un panneau latéral
+    - Bouton d'édition/visualisation des paramètres de l'application
+    - Bouton de retour (utilisable lors de la saisie des codes à barres)
+    - Bouton d'information sur l'appli
+    - Bouton de re-impression unitaire
+    - Bouton pour fermer l'appli
+
+- Une status barre dont le rôle est de guider l'opérateur dans le déroulement du scénario de saisie
+
+### Fenetre Paramètres:
+![GUI fenetre principale](https://raw.githubusercontent.com/RomualdDugied/impression-etiquettes/master/screenshots/ihm_parametres.png)
+
+- Paramètres généraux
+    - Fichier de sortie qui sera généré par l'appli et envoyé à l'imprimante
+    - Port où est branché de l'imprimante
+
+- Paramètres liés à la base MariaDB
+    - Adresse de la base
+    - Utilisateur
+    - Mot de passe
+    - Nom de la base
+
+- Paramètre de mise en page pour l'impression
+    - Offset en X
+    - Offser en Y
+    - Pas Horizontal entre 2 étiquettes
 
 
 ## Initialisation
 
 - chargement paramètres appli issue d'un fichier JSON
 
-# Fonctionnement
+## Fonctionnement
 
 - Mode Production
     - l'Opérateur choisi dans une ComboBox le type d'étiquette qu'il souhaite imprimer
-    - il scanne les informations ( les champs sont proposés en fonction de la nécessité)
-    - l'application propose à l'opérateur d'imprimer
+    - il scanne les informations (les champs sont proposés en fonction de la nécessité)
+    - impression des étiquettes
+
+- Possibilité de revenir en arrière lors de la saisie avec le bouton de retour
+- Possibilité re-imprimer une étiquette du dernier lot saisie, si il y a eu un défaut d'impression par exemple.
+
