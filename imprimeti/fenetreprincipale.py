@@ -5,7 +5,8 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 
 from imprimeti.qt.mainwindow_ui import Ui_MainWindow
 from imprimeti.etiquetteperso import EtiquetteClient
-from imprimeti.constantes import *
+from imprimeti import connexion
+import imprimeti.constantes as const
 
 
 logger = logging.getLogger(__name__)
@@ -52,13 +53,18 @@ class FenetrePrincipale(QtWidgets.QMainWindow):
 
         self.ui.actionUnitaire.setEnabled(False)
 
-        for operateur in LISTE_OPERATEURS:
-            self.ui.comboBoxOperateur.addItem(operateur)
-
-        self.ui.comboBoxOperateur.currentIndexChanged[str].connect(self.selection_operateur)  
+        self._rempli_combobox_operateur()         
 
         self._ihm_attente_type_etiquette()
-        
+
+    def _rempli_combobox_operateur(self):
+        """Chargement de la liste des opérateurs depuis la bdd et activation du signal
+        """        
+        enregistrements = connexion.envoi_requete_bdd("SELECT * FROM operateurs")
+        for operateur in enregistrements:
+            self.ui.comboBoxOperateur.addItem("{} - {} {} {}".format(*operateur[1:5]))
+
+        self.ui.comboBoxOperateur.currentIndexChanged[str].connect(self.selection_operateur)         
 
     def chargement_sequence_ihm(self, index):
         """ Chargement de la sequence de l'ihm """

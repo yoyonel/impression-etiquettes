@@ -6,7 +6,8 @@ import logging
 
 import mysql.connector as MC
 
-from imprimeti.constantes import *
+import imprimeti.constantes as const
+from imprimeti import connexion
 
 logger = logging.getLogger(__name__)
 
@@ -32,37 +33,6 @@ class EtiquetteClient():
         self.produit_serialise = False
         self.produit_versionne = False
         self.produit_valide = False
-        self.essaiConnexionDatabase(**kwargs)
-
-    def essaiConnexionDatabase(self, **kwargs):
-        """Fonction permettant une tentative de connexion à la base de donnée
-
-        Args:
-            **kwargs ([dict]): paramètres de la connexion par mots clés
-
-        Returns:
-            [type]: [description]
-        """            
-        self.__parametres_bdd = kwargs
-        try:
-            mysql_connexion = MC.connect(**self.__parametres_bdd)
-        except MC.Error as err:
-            print(err)
-        finally:
-            if mysql_connexion.is_connected():
-                mysql_connexion.close()
-
-    def envoiRequeteDatabase(self, requete):
-        try:
-            mysql_connexion = MC.connect(**self.__parametres_bdd)
-            mysql_curseur = mysql_connexion.cursor()
-            mysql_curseur.execute(requete)
-            return mysql_curseur.fetchall()
-        except MC.Error as err:
-            print(err)
-        finally:
-            if mysql_connexion.is_connected():
-                mysql_connexion.close()
                 
     def __str__(self):
         return ("type_etiquette = {}\n\
@@ -153,6 +123,7 @@ class EtiquetteClient():
         if not valeur.isalnum():
             raise ValueError("reference_produit doit être un alpha numérique")
         try:
+            mysql_connexion = None
             mysql_connexion = MC.connect(**self.__parametres_bdd)
             mysql_curseur = mysql_connexion.cursor()
             # Recherche du code produit dans la table etilot
@@ -162,18 +133,18 @@ class EtiquetteClient():
             if nombre_enregistrements == 0:
                 raise ValueError("Référence produit {} non présent dans la base!".format(valeur))
             elif nombre_enregistrements == 1:
-                if (self.type_etiquette == TypeEtiquette.TYPE_OF ):
-                    self.chemin_fichier_modele = DOSSIER_TEMPLATE + str(enregistrements[0][ChampBdd.FICHIER_MODELE_OF])
-                elif (self.type_etiquette == TypeEtiquette.TYPE_ADDITIONNEL ):
-                    self.chemin_fichier_modele = DOSSIER_TEMPLATE + str(enregistrements[0][ChampBdd.FICHIER_MODELE_ADDITIONNEL])
-                elif (self.type_etiquette == TypeEtiquette.TYPE_OPERATEUR_MONTAGE ):
-                    self.chemin_fichier_modele = DOSSIER_TEMPLATE + str(enregistrements[0][ChampBdd.FICHIER_MODELE_MONTAGE])
-                if (self.chemin_fichier_modele == DOSSIER_TEMPLATE):
+                if (self.type_etiquette == const.TypeEtiquette.TYPE_OF ):
+                    self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_OF])
+                elif (self.type_etiquette == const.TypeEtiquette.TYPE_ADDITIONNEL ):
+                    self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_ADDITIONNEL])
+                elif (self.type_etiquette == const.TypeEtiquette.TYPE_OPERATEUR_MONTAGE ):
+                    self.chemin_fichier_modele = const.DOSSIER_TEMPLATE + str(enregistrements[0][const.ChampBdd.FICHIER_MODELE_MONTAGE])
+                if (self.chemin_fichier_modele == const.DOSSIER_TEMPLATE):
                     raise Exception("Fichier modèle étiquette non renseigné dans la base")
-                self.reference_client = str(enregistrements[0][ChampBdd.REFERENCE_CLIENT])
-                self.produit_serialise = bool(enregistrements[0][ChampBdd.PRODUIT_SERIALISE])
-                self.produit_versionne = bool(enregistrements[0][ChampBdd.PRODUIT_VERSIONNE])
-                self.produit_valide = bool(enregistrements[0][ChampBdd.PRODUIT_VALIDE])
+                self.reference_client = str(enregistrements[0][const.ChampBdd.REFERENCE_CLIENT])
+                self.produit_serialise = bool(enregistrements[0][const.ChampBdd.PRODUIT_SERIALISE])
+                self.produit_versionne = bool(enregistrements[0][const.ChampBdd.PRODUIT_VERSIONNE])
+                self.produit_valide = bool(enregistrements[0][const.ChampBdd.PRODUIT_VALIDE])
                 if (not self.produit_valide):
                     raise Exception("Etiquette non validée techniquement ou changement de version en cours. Veuillez appeler un technicien!")
             else :
@@ -181,8 +152,9 @@ class EtiquetteClient():
         except MC.Error as err:
             print(err)
         finally:
-            if mysql_connexion.is_connected():
-                mysql_connexion.close()
+            if mysql_connexion :
+                if mysql_connexion.is_connected():
+                    mysql_connexion.close()
 
         self.__reference_produit = valeur
         logger.debug("reference_produit = {}".format(valeur))

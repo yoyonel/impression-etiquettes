@@ -6,7 +6,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 
 from imprimeti.etiquetteperso import EtiquetteClient
 from imprimeti.qt.setupwindow_ui import Ui_SetUpWindow
-from imprimeti.constantes import *
+import imprimeti.constantes as const
 
 logger = logging.getLogger(__name__)
 
@@ -20,13 +20,13 @@ class FenetreParametres(QtWidgets.QMainWindow):
     def show(self):
         QtWidgets.QMainWindow.show(self)
 
-        self.ui.lineEditDatabaseName.setText(BDD_NOM_BASE)
-        self.ui.lineEditPassword.setText(BDD_MOT_DE_PASSE)
-        self.ui.lineEditUserName.setText(BDD_NOM_UTILISATEUR)
-        self.ui.lineEditHostName.setText(BDD_ADRESSE_SERVEUR)
+        self.ui.lineEditDatabaseName.setText(const.BDD_NOM_BASE)
+        self.ui.lineEditPassword.setText(const.BDD_MOT_DE_PASSE)
+        self.ui.lineEditUserName.setText(const.BDD_NOM_UTILISATEUR)
+        self.ui.lineEditHostName.setText(const.BDD_ADRESSE_SERVEUR)
 
-        self.ui.lineEditOutFilename.setText(FICHIER_SORTIE)
-        self.ui.lineEditDeviceName.setText(BRADY_CHEMIN_PERIPHERIQUE)
+        self.ui.lineEditOutFilename.setText(const.FICHIER_SORTIE)
+        self.ui.lineEditDeviceName.setText(const.BRADY_CHEMIN_PERIPHERIQUE)
     
         self.ui.pushButtonApply.setEnabled(False)
 

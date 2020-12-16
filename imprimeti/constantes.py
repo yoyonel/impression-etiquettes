@@ -1,10 +1,15 @@
 #!./venv/bin/python
 # -*- coding: utf-8 -*-
+
+####### import modules lib std
 import json
 
-import mysql.connector as MC
+####### import modules externes
 
+
+####### import modules du projet
 from imprimeti.erreurs import InitialisationError
+from imprimeti import connexion
 
 # Constantes globales pour l'accès à la bdd de production
 BDD_ADRESSE_SERVEUR = ''
@@ -20,7 +25,7 @@ BRADY_DECALAGE_Y_MM = 0
 
 DOSSIER_TEMPLATE = ""
 FICHIER_SORTIE = ""
-LISTE_OPERATEURS = []
+
 
 
 class TypeEtiquette():
@@ -52,9 +57,7 @@ def chargement_constantes_application():
     """
     Chargement des constantes du projet depuis le fichier json et la bdd de production
     """
-    chargement_parametre_contenus_fichier_json("setting.json")
-
-    chargement_liste_operateurs_en_bdd()
+    chargement_parametre_contenus_fichier_json("settings.json")
 
 def chargement_parametre_contenus_fichier_json(fichier_json):  
     """ Chargement du fichier json qui renferme les settings de l'application
@@ -95,24 +98,4 @@ def chargement_parametre_contenus_fichier_json(fichier_json):
     except Exception as erreur:
         raise InitialisationError("Erreur non répertorié-> {}".format(erreur))
 
-def chargement_liste_operateurs_en_bdd():
-    """ Chargement de la liste des opérateurs depuis la base de données
-    """
-    try:
-        mysql_connexion = None
-        mysql_connexion = MC.connect(host=BDD_ADRESSE_SERVEUR, user=BDD_NOM_UTILISATEUR,
-                                    passwd=BDD_MOT_DE_PASSE, database=BDD_NOM_BASE)
-        mysql_curseur = mysql_connexion.cursor()
-        mysql_curseur.execute("SELECT * FROM operateurs")
-        for operateur in mysql_curseur:
-            LISTE_OPERATEURS.append("{} - {} {} {}".format(*operateur[1:5]))
-        mysql_curseur.close()        
-        mysql_connexion.close()
     
-    except MC.Error as erreur:
-        print(erreur)
-    finally:
-        if mysql_connexion :
-            if mysql_connexion.is_connected():
-                mysql_connexion.close()
-       
