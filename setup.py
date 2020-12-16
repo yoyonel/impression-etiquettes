@@ -12,11 +12,16 @@ setup(
     name='labelprintermanager',
     version='1.0',
     author='Romuald Dugied',
-    author_email = 'romuald.dugied@gmail.com',
+    author_email='romuald.dugied@gmail.com',
     url='https://github.com/RomualdDugied/labelprintermanager',
     description='Logiciel impression etiquette',
     long_description=long_description,
     long_description_content_type='text/mardown',
     license='GNU GPLv3',
-    packages=find_packages(),    
+    packages=find_packages(),
+    entry_points={
+        'console_scripts': [
+            'imprimeti=imprimeti.__main__:main'
+        ],
+    }
 )

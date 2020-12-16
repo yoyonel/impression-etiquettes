@@ -1,1 +1,1 @@
-include *.md *.txt LICENSE
+include *.md *.txt LICENSE logs/log.conf

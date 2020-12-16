@@ -56,7 +56,7 @@ class FenetrePrincipale(QtWidgets.QMainWindow):
         """Chargement de la liste des opérateurs depuis la bdd et activation du signal
         """        
         enregistrements = connexion.envoi_requete_bdd("SELECT * FROM operateurs")
-        for operateur in enregistrements:
+        for operateur in enregistrements or []:
             self.ui.comboBoxOperateur.addItem("{} - {} {} {}".format(*operateur[1:5]))
 
         self.ui.comboBoxOperateur.currentIndexChanged[str].connect(self.selectionner_operateur)         
