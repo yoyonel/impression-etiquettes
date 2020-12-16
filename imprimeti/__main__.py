@@ -46,7 +46,7 @@ def main():
     fenetre_principale = FenetrePrincipale()
     fenetre_parametres = FenetreParametres()
     try:
-        # const.chargement_constantes_application()
+        const.chargement_constantes_application()
         description_etiquette = EtiquetteClient()
     except InitialisationError as erreur:
         QtWidgets.QMessageBox.critical(fenetre_principale, "Initialisation", erreur.message)
